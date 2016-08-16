@@ -1,0 +1,15 @@
+{
+	"name":"Alan",
+	"age":18,
+	"item_bag":[
+		{
+			"name":"apple",
+			"price":20
+		},
+		{
+			"name":"sword",
+			"price":300
+		},
+		"test"
+	]
+}
