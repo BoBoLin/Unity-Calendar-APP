@@ -1,0 +1,23 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\EditStep.cs">
+    <Files>
+      <File FileName="Assets\script\EditStep.cs" Line="53" Column="84" />
+      <File FileName="Assets\script\AddEvent.cs" Line="433" Column="3" />
+      <File FileName="..\..\..\AppData\LocalLow\DefaultCompany\calendar\day1.json" Line="1" Column="1" />
+      <File FileName="Assets\script\home.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\ShowEvents.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\ShowSteps.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\preceding_page.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\android_BackHome.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\ShowNum.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\android_end.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\BackNewEvent1.cs" Line="1" Column="1" />
+      <File FileName="D:\Unity Projects\unity project\Calendar\Assets\script\AddEvent.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
