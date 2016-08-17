@@ -70,20 +70,20 @@ public class ShowSteps : MonoBehaviour {
 	public void OnGUI()
 	{
 		GUI.skin = GUISkin;
-        GUI.skin.button.fontSize = Screen.height / 30;
+        GUI.skin.button.fontSize = Screen.height / 20;
         GUI.skin.label.fontSize = Screen.height / 30;
-        GUI.skin.verticalScrollbarThumb.fixedWidth = 10;
-        GUI.skin.verticalScrollbar.fixedWidth = 10;
-        scrollPosition = GUI.BeginScrollView(new Rect(Screen.width / 12, Screen.height / 6, Screen.width - Screen.width / 12, Screen.height * 4 / 5),
+        GUI.skin.verticalScrollbarThumb.fixedWidth = 5;
+		GUI.skin.verticalScrollbar.fixedWidth = 5;
+        scrollPosition = GUI.BeginScrollView(new Rect(0, Screen.height / 6 + 10, Screen.width , Screen.height * 4 / 5),
                                              scrollPosition,
                                              new Rect(0, 0, Screen.width * 11 / 12 - 15, tmp_step_num * Screen.height / 10));
         for (int i = 0; i < tmp_step_num; i++) 
 		{
-			GUI.Label (new Rect ( 0, Screen.height / 10 * i, Screen.width / 10 * 2, Screen.height / 10), "第" + (i + 1).ToString () + "步 : ");
+			GUI.Label (new Rect ( Screen.width / 12, Screen.height / 10 * i, Screen.width / 10 * 2, Screen.height / 10), "第" + (i + 1).ToString () + "步 : ");
 
 			string[] split_step =  Regex.Split(jsonData ["subject" + get_event_num.ToString()] [0] ["step"+(i+1).ToString()].ToString (), "/f:", RegexOptions.IgnoreCase);  //將字串分為前面是步驟名稱 後面是是否完成
 
-			if (GUI.Button (new Rect (Screen.width / 5, Screen.height / 10 * i , Screen.width / 10 * 6, Screen.height / 10), split_step[0])) 
+			if (GUI.Button (new Rect (Screen.width *17 / 60, Screen.height / 10 * i , Screen.width / 10 * 6, Screen.height / 10), split_step[0])) 
 			{
 				choose = i + 1;
 			}
@@ -93,7 +93,7 @@ public class ShowSteps : MonoBehaviour {
 			if(finish_tmp == 1)
 			{
 				GUI.skin = GUISkinDelete; //印出完成的圖案
-				GUI.Label(new Rect(Screen.width/11*9, Screen.height / 10 *i , Screen.width / 12, Screen.height / 14), "");
+				GUI.Label(new Rect(Screen.width/11*9 + Screen.width / 12, Screen.height / 10 *i , Screen.width / 11, Screen.height / 14), "");
 			}
 			GUI.skin = GUISkin; //初始化guiskin
 		}
@@ -102,7 +102,7 @@ public class ShowSteps : MonoBehaviour {
 
 		if (choose != 0)
 		{
-			GUI.Label(new Rect(Screen.width/10*8, Screen.height / 10 * (choose-1), Screen.width / 12, Screen.height / 12), "");
+			GUI.Label(new Rect(0 , Screen.height / 10 * (choose-1), Screen.width / 12, Screen.height / 12), "");
 		}
 
         GUI.EndScrollView();

@@ -82,7 +82,7 @@ public class ShowEvents : MonoBehaviour
             if (GUI.Button (new Rect(0, Screen.height / 10 * i, Screen.width / 10 * 6, Screen.height / 13), jsonData ["subject" + (i + 1).ToString ()] [0] ["name"].ToString ()))  //Screen.width/10 * 4, Screen.width/10
 			{
 				event_num = i + 1;
-				condition = 1; //將 控制變數更改
+				condition = 1; //將控制變數更改
 				SceneManager.LoadScene("EventStep");
 			}
 

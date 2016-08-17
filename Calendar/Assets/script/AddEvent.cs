@@ -120,6 +120,25 @@ public class AddEvent : MonoBehaviour {
             hideButton.gameObject.SetActive(false);
             hideButton = GameObject.Find("insert").GetComponent<Button>();
             hideButton.gameObject.SetActive(false);
+			
+			Button updatePositionButton ;
+			updatePositionButton = GameObject.Find("Button").GetComponent<Button>();
+			updatePositionButton.transform.position = new Vector3(Screen.width * 6 / 7 , Screen.height * 9 / 10, 0);
+			
+			updatePositionButton = GameObject.Find("backhomeButton").GetComponent<Button>();
+			updatePositionButton.transform.position = new Vector3(Screen.width / 9, Screen.height * 9 / 10, 0);
+			
+			Text updatePositionText ;
+			updatePositionText = GameObject.Find("NameText").GetComponent<Text>();
+			updatePositionText.transform.position = new Vector3(Screen.width / 9, Screen.height * 4 / 5, 0);
+			
+			updatePositionText = GameObject.Find("Title").GetComponent<Text>();
+			updatePositionText.transform.position = new Vector3(Screen.width / 2, Screen.height * 9 / 10, 0);			
+            
+			InputField updatePositionInputfield ;
+			updatePositionInputfield = GameObject.Find("InputField").GetComponent<InputField>();
+			updatePositionInputfield.transform.position = new Vector3(Screen.width * 6 / 11, Screen.height * 4 / 5, 0);			
+			
         }
     }
 
@@ -132,14 +151,14 @@ public class AddEvent : MonoBehaviour {
 
 		if (condition == 1) //編輯event模式
 		{
-            GUI.skin.verticalScrollbarThumb.fixedWidth = 10;
-            GUI.skin.verticalScrollbar.fixedWidth = 10;
+            GUI.skin.verticalScrollbarThumb.fixedWidth = 5;
+            GUI.skin.verticalScrollbar.fixedWidth = 5;
             scrollPosition = GUI.BeginScrollView(new Rect(0, Screen.height / 10 * 3, Screen.width, Screen.height / 2),
                                                  scrollPosition,
                                                  new Rect(0, 0, Screen.width * 5 / 6 - 15, tmp_step_num * Screen.height / 10));
             if (choose != 0)
             {
-                GUI.Label(new Rect(Screen.width * 5 / 6, Screen.height / 10 * (choose - 1), Screen.width / 12, Screen.height / 12), "");
+                GUI.Label(new Rect(Screen.width * 9 / 10, Screen.height / 10 * (choose - 1), Screen.width / 12, Screen.height / 12), "");
             } // 已完成標記
 
             if (tmp_step_num == 0)
@@ -148,12 +167,12 @@ public class AddEvent : MonoBehaviour {
 			{
 				GUI.skin = GUISkinShowStep;
                 GUI.skin.label.fontSize = Screen.height / 30;
-                GUI.skin.button.fontSize = Screen.height / 30;
+                GUI.skin.button.fontSize = Screen.height / 20;
                 GUI.Label (new Rect(0, Screen.height / 10 * i, Screen.width / 10 * 2, Screen.height / 10), "第" + (i + 1).ToString () + "步 : ");
 
 				string[] split_step =  Regex.Split(stepStringArray [i + 1], "/f:", RegexOptions.IgnoreCase);  //將字串分為前面是步驟名稱 後面是是否完成
 
-				if(GUI.Button (new Rect(Screen.width / 5, Screen.height / 10 * i, Screen.width / 10 * 6, Screen.height / 10), split_step[0]))
+				if(GUI.Button (new Rect(Screen.width / 5 + 5, Screen.height / 10 * i, Screen.width / 10 * 7, Screen.height / 10), split_step[0]))
 				{
                     select_step_num = i + 1;
                     choose = i + 1;
@@ -190,9 +209,9 @@ public class AddEvent : MonoBehaviour {
 		{
             GUI.skin.verticalScrollbarThumb.fixedWidth = 10;
             GUI.skin.verticalScrollbar.fixedWidth = 10;
-            scrollPosition = GUI.BeginScrollView(new Rect(0, Screen.height / 10 * 3, Screen.width, Screen.height / 2),
+            scrollPosition = GUI.BeginScrollView(new Rect(Screen.width / 12, Screen.height / 4, Screen.width * 11 / 12, Screen.height / 20 * 11 ),
                                                  scrollPosition,
-                                                 new Rect(0, 0, Screen.width * 5 / 6 - 15 , tmp_step_num * Screen.height / 10 ));
+                                                 new Rect(0, 0, Screen.width * 11 / 12 - 15 , tmp_step_num * Screen.height / 10 ));
             //BeginScrollView->設置拉bar的介面，當超過Screen.height，拉bar就會出現 
             if (choose != 0)
             {
