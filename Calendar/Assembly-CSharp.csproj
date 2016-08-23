@@ -3,14 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
     <ProjectGuid>{E9B293E6-4FDC-4081-6579-0D0DF5526DFA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
@@ -34,38 +33,43 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>D:\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>D:\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\script\AddEvent.cs" />
-     <Compile Include="Assets\script\BackNewEvent1.cs" />
-     <Compile Include="Assets\script\EditStep.cs" />
-     <Compile Include="Assets\script\Json.cs" />
-     <Compile Include="Assets\script\ShowEvents.cs" />
-     <Compile Include="Assets\script\ShowNum.cs" />
-     <Compile Include="Assets\script\ShowSteps.cs" />
-     <Compile Include="Assets\script\WriteJson.cs" />
-     <Compile Include="Assets\script\android_BackHome.cs" />
-     <Compile Include="Assets\script\android_end.cs" />
-     <Compile Include="Assets\script\home.cs" />
-     <Compile Include="Assets\script\preceding_page.cs" />
- <Reference Include="UnityEngine.UI">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="LitJson">
- <HintPath>C:/Users/Bobo/Desktop/Calendar_8.15/Calendar/Assets/LitJson.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\script\AddDetail.cs" />
+    <Compile Include="Assets\script\AddEvent.cs" />
+    <Compile Include="Assets\script\BackNewEvent1.cs" />
+    <Compile Include="Assets\script\EditStep.cs" />
+    <Compile Include="Assets\script\Json.cs" />
+    <Compile Include="Assets\script\ShowDetail.cs" />
+    <Compile Include="Assets\script\ShowEvents.cs" />
+    <Compile Include="Assets\script\ShowNum.cs" />
+    <Compile Include="Assets\script\ShowSteps.cs" />
+    <Compile Include="Assets\script\WriteJson.cs" />
+    <Compile Include="Assets\script\android_BackHome.cs" />
+    <Compile Include="Assets\script\android_end.cs" />
+    <Compile Include="Assets\script\home.cs" />
+    <Compile Include="Assets\script\preceding_page.cs" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>D:\Unity\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>C:\Users\Bobo\Desktop\Calendar_8.17\Calendar\Assets\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Users\Bobo\Desktop\Calendar_8.17\Calendar\Assets\System.Drawing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -75,5 +79,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>

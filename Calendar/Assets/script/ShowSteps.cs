@@ -14,7 +14,8 @@ public class ShowSteps : MonoBehaviour {
 
     public GUISkin GUISkin;
 	public GUISkin GUISkinAddStep;
-	public GUISkin GUISkinDelete;
+	public GUISkin GUISkinUnfinish;
+	public GUISkin GUISkinFinish;
 
 	Text text;
 	private string MyWrite;
@@ -23,6 +24,7 @@ public class ShowSteps : MonoBehaviour {
 	public string get_step_num = "";
 	public int tmp_step_num = 0;
     public static int from_show_step ;
+	public static int choose_step_num = 0 ;
 
 	public int choose = 0;
 	public string step = "";
@@ -85,15 +87,42 @@ public class ShowSteps : MonoBehaviour {
 
 			if (GUI.Button (new Rect (Screen.width *17 / 60, Screen.height / 10 * i , Screen.width / 10 * 6, Screen.height / 10), split_step[0])) 
 			{
-				choose = i + 1;
+				choose_step_num = i + 1;
+				SceneManager.LoadScene ("StepDetail");
+
 			}
 
 			int finish_tmp = 0;
 			finish_tmp = Int32.Parse (split_step [1]); //得到是否完成的值
-			if(finish_tmp == 1)
+			if (finish_tmp == 1)   //完成的步驟
 			{
-				GUI.skin = GUISkinDelete; //印出完成的圖案
-				GUI.Label(new Rect(Screen.width/11*9 + Screen.width / 12, Screen.height / 10 *i , Screen.width / 11, Screen.height / 14), "");
+				GUI.skin = GUISkinFinish; //印出完成的圖案
+				if (GUI.Button (new Rect (Screen.width / 11 * 9 + Screen.width / 12, Screen.height / 10 * i, Screen.width / 11, Screen.height / 14), "")) 
+				{
+					jsonData ["subject" + get_event_num.ToString ()] [0] ["step"+(i+1).ToString()] = split_step[0]+"/f:0";
+
+					JsonWriter jsonWriter = new JsonWriter ();
+					jsonWriter.PrettyPrint = true;
+					jsonWriter.IndentValue = 4;
+					JsonMapper.ToJson (jsonData, jsonWriter);
+
+					File.WriteAllText (Application.persistentDataPath + "/day" + get_day_num + ".json", jsonWriter.ToString ());
+				}
+			} 
+			else  //未完成的步驟
+			{
+				GUI.skin = GUISkinUnfinish; //印出未完成的圖案
+				if (GUI.Button (new Rect (Screen.width / 11 * 9 + Screen.width / 12, Screen.height / 10 * i, Screen.width / 11, Screen.height / 14), "")) 
+				{
+					jsonData ["subject" + get_event_num.ToString ()] [0] ["step"+(i+1).ToString()] = split_step[0]+"/f:1";
+
+					JsonWriter jsonWriter = new JsonWriter ();
+					jsonWriter.PrettyPrint = true;
+					jsonWriter.IndentValue = 4;
+					JsonMapper.ToJson (jsonData, jsonWriter);
+
+					File.WriteAllText (Application.persistentDataPath + "/day" + get_day_num + ".json", jsonWriter.ToString ());
+				}	
 			}
 			GUI.skin = GUISkin; //初始化guiskin
 		}
@@ -117,8 +146,8 @@ public class ShowSteps : MonoBehaviour {
             touch = Input.touches[0];
             if (touch.phase == TouchPhase.Moved)
             {
-                if (touch.deltaPosition.y > 0)
-                    scrollPosition.y = scrollPosition.y + touch.deltaPosition.y + 20;
+				if (touch.deltaPosition.y > 0)
+					scrollPosition.y = scrollPosition.y + touch.deltaPosition.y + 20;
                 else
                     scrollPosition.y = scrollPosition.y + touch.deltaPosition.y - 20;
             }

@@ -13,6 +13,7 @@ public class EditStep : MonoBehaviour {
 	int step_num_edit = AddEvent.tmp_step_num;
 	public static int tmp_step_num_edit;
 	public static string[] stepStringArray_edit = AddEvent.stepStringArray; 
+	public static string[] detailStringArray_edit = AddEvent.detailStringArray;
 	public static int edit = 0;
 	public string[] split_step = new string[2];
 
@@ -23,7 +24,6 @@ public class EditStep : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tmp_step_num_edit = step_num_edit;
-		print (tmp_step_num_edit + "get step num");
 		edit = 1;
 
 		get_step_content = stepStringArray_edit[select_step_num];
@@ -33,7 +33,9 @@ public class EditStep : MonoBehaviour {
 		InputFieldName.text = split_step [0];
 
 	}
-	
+
+
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyUp(KeyCode.Escape))//當手指放開按鈕後才會動作

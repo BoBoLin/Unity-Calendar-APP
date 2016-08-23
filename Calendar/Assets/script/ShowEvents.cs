@@ -57,7 +57,14 @@ public class ShowEvents : MonoBehaviour
 			jsonData = JsonMapper.ToObject (MyWrite);
 			tmp_num = Int32.Parse (jsonData ["event_num"].ToString ());
 		}
-			
+
+		/*JsonWriter jsonWriter = new JsonWriter ();
+		jsonWriter.PrettyPrint = true;
+		jsonWriter.IndentValue = 4;
+		JsonMapper.ToJson (jsonData ["subject1"] [0], jsonWriter);
+
+		print (jsonWriter.ToString ());
+		*/	
     }
 
     public void OnGUI()

@@ -30,6 +30,12 @@ public class preceding_page : MonoBehaviour {
             case (4):
                 SceneManager.LoadScene("EventStep");
                 break;
+			case(5):
+				SceneManager.LoadScene ("EditDetail");
+				break;
+			case(6):
+				SceneManager.LoadScene ("StepDetail");
+				break;
         }
     }
 }

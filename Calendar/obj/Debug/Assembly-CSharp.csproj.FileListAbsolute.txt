@@ -20,3 +20,5 @@ D:\Unity Projects\unity project\Calendar\Temp\bin\Debug\UnityEngine.Networking.x
 D:\Unity Projects\unity project\Calendar\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\Unity Projects\unity project\Calendar\obj\Debug\Assembly-CSharp.dll
 D:\Unity Projects\unity project\Calendar\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Bobo\Desktop\Calendar_8.17\Calendar\obj\Debug\Assembly-CSharp.dll
+C:\Users\Bobo\Desktop\Calendar_8.17\Calendar\obj\Debug\Assembly-CSharp.pdb

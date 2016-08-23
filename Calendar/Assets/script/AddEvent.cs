@@ -42,18 +42,24 @@ public class AddEvent : MonoBehaviour {
 	public int new_step_num = 0;
 
 	public static string[] stepStringArray= new string[50];
+	public static string[] detailStringArray = new string[50]; 
 	public string[] tmp_arr = new string[50]; 
+	public string[] tmp_arr_detail = new string[50];
 	public static int select_step_num = 0;
 	public static int tmp_step_num = 0;
 
 	int if_edit = EditStep.edit;
 	int tmp_step_num_edit = EditStep.tmp_step_num_edit;
 	string[] stepStringArray_edit = EditStep.stepStringArray_edit;
+	string[] detailStringArray_edit = EditStep.detailStringArray_edit;
 
 
     private Vector2 scrollPosition = Vector2.zero;
 
     public int choose = 0;
+	public string detail = "";
+
+	string total_detail = "";
 
     void Start()
 	{
@@ -64,13 +70,15 @@ public class AddEvent : MonoBehaviour {
             if_edit = 1;
 
 		stepStringArray [0] = ""; //初始化array[0]
+		detailStringArray[0] = ""; //初始化array[0]
 		MyWrite = File.ReadAllText (Application.persistentDataPath + "/day" + select_num + ".json");
 		jsonData = JsonMapper.ToObject (MyWrite);
 		get_event_num = jsonData ["event_num"].ToString ();
 		stringToEdit = "請輸入步驟1之內容";
 		tmp_step_num = 0; //初始化 step num
 
-		if (condition == 1) {  //編輯模式下
+		if (condition == 1) //編輯模式下
+		{  
 			title = GameObject.Find ("Title").GetComponent<Text> ();
 			title.text = "編輯步驟";
             title = GameObject.Find("send").GetComponent<Text>();
@@ -80,38 +88,63 @@ public class AddEvent : MonoBehaviour {
 
 			get_step_num = jsonData ["subject" + event_num.ToString ()] [0] ["step_num"].ToString ();
 
-			if (if_edit != 1) {  //還沒編輯step過
+			if (if_edit != 1) //還沒編輯step過
+			{  
 				tmp_step_num = Int32.Parse (get_step_num); //查看原先有多少筆steps
 				stringToEdit = "請輸入步驟" + (tmp_step_num + 1).ToString () + "之內容";
-				for (int i = 1; i <= tmp_step_num; i++) {
+				for (int i = 1; i <= tmp_step_num; i++) 
+				{
 					stepStringArray [i] = jsonData ["subject" + event_num.ToString ()] [0] ["step" + i.ToString ()].ToString ();
 				}
 				position_old = position + tmp_step_num;
 
-				for (int j = 1; j <= tmp_step_num; j++) { //存入所有steps
+				for (int j = 1; j <= tmp_step_num; j++) //存入所有steps
+				{ 
 					step += ("\"step" + j + "\":\"" + stepStringArray [j] + "\"");
 					if (j != tmp_step_num)
 						step += ",\n\t\t\t";
 				}
+
+				for (int i = 1; i <= tmp_step_num; i++) 
+				{
+					JsonWriter jsonWriter = new JsonWriter ();
+					jsonWriter.PrettyPrint = true;
+					jsonWriter.IndentValue = 4;
+					JsonMapper.ToJson (jsonData ["subject" + event_num.ToString ()] [i], jsonWriter);
+					detailStringArray [i] = jsonWriter.ToString ();
+					total_detail += detailStringArray [i];
+					if(i!= tmp_step_num)
+						total_detail += ",";
+				}
+
 				new_step = step;
 				new_step_num = tmp_step_num;
-			} else {
+			} 
+			else //編輯過
+			{ 
 				tmp_step_num = tmp_step_num_edit;
 				stringToEdit = "請輸入步驟" + (tmp_step_num + 1).ToString () + "之內容";
 				stepStringArray = stepStringArray_edit;
+				detailStringArray = detailStringArray_edit;
 				position_old = position + tmp_step_num;
 
-				for (int j = 1; j <= tmp_step_num; j++) { //存入所有steps
+				for (int j = 1; j <= tmp_step_num; j++) //存入所有steps
+				{ 
 					step += ("\"step" + j + "\":\"" + stepStringArray [j] + "\"");
 					if (j != tmp_step_num)
 						step += ",\n\t\t\t";
+				}
+				for (int i = 1; i <= tmp_step_num; i++) 
+				{
+					total_detail += detailStringArray [i];
+					if(i!= tmp_step_num)
+						total_detail += ",";
 				}
 				new_step = step;
 				new_step_num = tmp_step_num;
 			}
 		}
-
-        else
+        else //新增模式下
         {
             Button hideButton;
             hideButton = GameObject.Find("delete").GetComponent<Button>();
@@ -145,7 +178,6 @@ public class AddEvent : MonoBehaviour {
 	public void OnGUI()
 	{
 
-
 		GUI.skin = GUISkinAddStep;
 
 
@@ -159,7 +191,7 @@ public class AddEvent : MonoBehaviour {
             if (choose != 0)
             {
                 GUI.Label(new Rect(Screen.width * 9 / 10, Screen.height / 10 * (choose - 1), Screen.width / 12, Screen.height / 12), "");
-            } // 已完成標記
+            } // 選取記號
 
             if (tmp_step_num == 0)
 				stepStringArray[1] = "請輸入步驟1之內容";
@@ -183,7 +215,7 @@ public class AddEvent : MonoBehaviour {
 
             GUI.skin = GUISkinAddStep;
             GUI.skin.textField.fontSize = Screen.height / 20;
-            stringToEdit = GUI.TextField(new Rect(Screen.width / 10, Screen.height / 10 * 8, Screen.width / 10 * 8, Screen.height / 10), stringToEdit, 10);
+            stringToEdit = GUI.TextField(new Rect(Screen.width / 10, Screen.height / 10 * 8, Screen.width / 10 * 8, Screen.height / 10), stringToEdit, 50);
             GUI.skin.button.fontSize = Screen.height / 30;
             if (GUI.Button (new Rect(Screen.width / 10 * 3, Screen.height / 10 * 9, Screen.width / 10 * 4, Screen.height / 15), "新增此步驟"))   
 			{
@@ -200,8 +232,19 @@ public class AddEvent : MonoBehaviour {
 					if (j != tmp_step_num)
 						step += ",\n\t\t\t";
 				}
+
 				new_step = step;
 				new_step_num = tmp_step_num;
+
+				detailStringArray [tmp_step_num] = "{\"name\":\"step" + tmp_step_num + "\",\n\"detail_num\":0\n}";
+				total_detail = "";
+				for(int x = 1; x <= tmp_step_num ; x++)
+				{
+					total_detail += detailStringArray [x];
+					if(x!= tmp_step_num)
+						total_detail += ",";
+				}
+
 			}
 
 		}
@@ -311,8 +354,22 @@ public class AddEvent : MonoBehaviour {
 					step_dot = ",";
 				else
 					step_dot = "";
+				string old_total_detail = "";
+				string old_step_detail_dot = ",";
+				if(tmp_old_step_num == 0)
+					old_step_detail_dot = "";
+				for(int x = 1; x <= tmp_old_step_num ; x++)
+				{
+					JsonWriter jsonWriter = new JsonWriter ();
+					jsonWriter.PrettyPrint = true;
+					jsonWriter.IndentValue = 4;
+					JsonMapper.ToJson (jsonData ["subject"+i.ToString()] [x], jsonWriter);
+					old_total_detail += jsonWriter.ToString (); 
+					if(x < tmp_old_step_num)
+						old_total_detail += "," ;
+				}
 
-				subject += "\n\t\"subject" + i.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + i.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num +step_dot+"\n\t\t\t"+old_step+ "\n\t\t}\n\t],";
+				subject += "\n\t\"subject" + i.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + i.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num + step_dot + "\n\t\t\t" + old_step + "\n\t\t}" + old_step_detail_dot + old_total_detail + "\n\t],";
 			}
 
 			tmp_event_num++;
@@ -320,9 +377,28 @@ public class AddEvent : MonoBehaviour {
 				step_dot = ",";
 			else
 				step_dot = "";
-			string final = "{\n\t\"day_num\":" + get_day_num + ",\n\t\"event_num\":" + tmp_event_num.ToString () + ", " + subject + "\n\t\"subject" + tmp_event_num.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + enterText.text + "\",\n\t\t\t\"step_num\":"+tmp_step_num+step_dot+"\n\t\t\t"+step+"\n\t\t}\n\t]\n}";
+			
+			total_detail = "";
+			string step_detail_dot = ",";
+			if(tmp_step_num == 0)
+				step_detail_dot = "";
+			for (int i = 1; i <= tmp_step_num; i++) 
+			{
+				total_detail += "\t\t{\n\t\t\t\"name\":\"step" + i.ToString () + "\",\n\t\t\t\"detail_num\":0\n\t\t}";
+				if(i<tmp_step_num)
+					total_detail += ",\n";
+			}
+			string final = "{\n\t\"day_num\":" + get_day_num + ",\n\t\"event_num\":" + tmp_event_num.ToString () + ", " + subject + "\n\t\"subject" + tmp_event_num.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + enterText.text + "\",\n\t\t\t\"step_num\":" + tmp_step_num + step_dot + "\n\t\t\t" + step + "\n\t\t}" + step_detail_dot +"\n"+ total_detail + "\n\t]\n}";
 
 			File.WriteAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json", final);
+
+			MyWrite = File.ReadAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json");
+			jsonData = JsonMapper.ToObject (MyWrite);
+			JsonWriter jsonWriter2 = new JsonWriter ();
+			jsonWriter2.PrettyPrint = true;
+			jsonWriter2.IndentValue = 4;
+			JsonMapper.ToJson (jsonData, jsonWriter2);
+			File.WriteAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json", jsonWriter2.ToString ());
 
 			SceneManager.LoadScene ("Event");
 		} 
@@ -334,6 +410,11 @@ public class AddEvent : MonoBehaviour {
 			//-------寫入在編輯事件之前之事件
 			for (int i = 1; i < event_num; i++) 
 			{
+				JsonWriter jsonWriter = new JsonWriter ();
+				jsonWriter.PrettyPrint = true;
+				jsonWriter.IndentValue = 4;
+				JsonMapper.ToJson (jsonData ["subject" + i.ToString ()], jsonWriter);
+
 				get_step_num = jsonData ["subject" + i.ToString ()] [0] ["step_num"].ToString ();
 				int e_tmp_step_num = Int32.Parse (get_step_num);
 				step = "";//初始化step
@@ -347,8 +428,9 @@ public class AddEvent : MonoBehaviour {
 					step_dot = ",";
 				else
 					step_dot = "";
+				subject += "\n\t\"subject" + i.ToString () + "\":" + jsonWriter.ToString ()+",";
 
-				subject += "\n\t\"subject" + i.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + i.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num + step_dot + "\n\t\t\t" + step + "\n\t\t}\n\t],";
+				//subject += "\n\t\"subject" + i.ToString() + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + i.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num + step_dot + "\n\t\t\t" + step + "\n\t\t}\n\t],";
 			}
 
 			//------------------寫入編輯的事件
@@ -356,7 +438,7 @@ public class AddEvent : MonoBehaviour {
 				step_dot = ",";
 			else
 				step_dot = "";
-			subject += "\n\t\"subject" + event_num.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + enterText.text + "\",\n\t\t\t\"step_num\":" + new_step_num + step_dot + "\n\t\t\t" + new_step + "\n\t\t}\n\t]";  //改變此event編輯的名稱
+			subject += "\n\t\"subject" + event_num.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + enterText.text + "\",\n\t\t\t\"step_num\":" + new_step_num + step_dot + "\n\t\t\t" + new_step + "}" + step_dot + total_detail + "\n\t]";  //改變此event編輯的名稱
 
 			if(event_num != tmp_event_num)
 				subject += ",";
@@ -364,6 +446,11 @@ public class AddEvent : MonoBehaviour {
 			//-----------------寫入在編輯事件之後的事件
 			for (int j = event_num + 1; j <= tmp_event_num; j++) 
 			{
+				JsonWriter jsonWriter = new JsonWriter ();
+				jsonWriter.PrettyPrint = true;
+				jsonWriter.IndentValue = 4;
+				JsonMapper.ToJson (jsonData ["subject" + j.ToString ()], jsonWriter);
+
 				get_step_num = jsonData ["subject" + j.ToString ()] [0] ["step_num"].ToString ();
 				int e_tmp_step_num = Int32.Parse (get_step_num);
 				step = "";//初始化step
@@ -377,15 +464,29 @@ public class AddEvent : MonoBehaviour {
 					step_dot = ",";
 				else
 					step_dot = "";
+				subject += "\n\t\"subject" + j.ToString () + "\":" + jsonWriter.ToString ();
 
-
-				subject += "\n\t\"subject" + j.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + j.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num + step_dot + "\n\t\t\t" + step + "\n\t\t}\n\t]";
+				//subject += "\n\t\"subject" + j.ToString () + "\":[\n\t\t{\n\t\t\t\"name\":\"" + jsonData ["subject" + j.ToString ()] [0] ["name"] + "\",\n\t\t\t\"step_num\":" + get_step_num + step_dot + "\n\t\t\t" + step + "\n\t\t}\n\t]";
 				if (j != tmp_event_num) 
 					subject += ",";
 			}
 
 			string final = "{\n\t\"day_num\":"+get_day_num+",\n\t\"event_num\":"+tmp_event_num.ToString()+","+ subject +"\n}";
 			File.WriteAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json", final);
+
+			MyWrite = File.ReadAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json");
+			jsonData = JsonMapper.ToObject (MyWrite);
+			for(int x = 1 ; x<= tmp_step_num ; x++)
+			{
+				jsonData ["subject" + event_num.ToString ()] [x] ["name"] = "step" + x.ToString ();
+			}
+			JsonWriter jsonWriter2 = new JsonWriter ();
+			jsonWriter2.PrettyPrint = true;
+			jsonWriter2.IndentValue = 4;
+			JsonMapper.ToJson (jsonData, jsonWriter2);
+			File.WriteAllText (Application.persistentDataPath + "/day" + select_num.ToString () + ".json", jsonWriter2.ToString ());
+
+
 
 			SceneManager.LoadScene ("EventStep");
 
@@ -428,6 +529,8 @@ public class AddEvent : MonoBehaviour {
 		if (choose != 0) 
 		{
 			from_show_step = 1;
+
+			//-----存入step要寫入後端之資料
 			step = "";
 			for (int j = 1; j < choose; j++) { //存入所有steps
 				step += ("\"step" + j + "\":\"" + stepStringArray [j] + "\"");
@@ -441,11 +544,31 @@ public class AddEvent : MonoBehaviour {
 				if(j != tmp_step_num)
 					step += ",\n\t\t\t";
 			}
+
+			//-----存入detail要寫入後端之資料
+			total_detail = "" ;
+			for(int x = 1; x < choose ; x++)
+			{
+				total_detail += detailStringArray [x];
+				if (x + 1 != tmp_step_num)
+					total_detail += ",";
+			}
+			for (int x = (choose + 1); x <= tmp_step_num; x++) 
+			{
+				detailStringArray [x - 1] = detailStringArray [x];
+				total_detail += detailStringArray [x];
+				if (x != tmp_step_num)
+					total_detail += ",";
+			}
+
 			new_step = step;
 			tmp_step_num--;
 			new_step_num = tmp_step_num;
-			//position_old--;
 			stringToEdit = "請輸入步驟" + (tmp_step_num + 1).ToString () + "之內容";
+
+			//total_detail += "{\"name\":\"step" + tmp_step_num + "\",\n\"detail_num\":0\n}";
+			//detailStringArray [tmp_step_num] = "{\"name\":\"step" + tmp_step_num + "\",\n\"detail_num\":0\n}";
+
 		}
 		choose = 0;
 
@@ -463,22 +586,51 @@ public class AddEvent : MonoBehaviour {
 				tmp_arr [j + 1] = stepStringArray [j];
 			}
 				
-			for (int j = 1; j < choose; j++) { //存入所有steps
+			for (int j = 1; j < choose; j++) //存入所有steps
+			{ 
 				step += ("\"step" + j + "\":\"" + stepStringArray [j] + "\"");
 				if (j + 1 != tmp_step_num)
 					step += ",\n\t\t\t";
 			}
 			stepStringArray [choose] = "請編輯插入之內容/f:0";
 			step += ("\"step" + choose.ToString () + "\":\"請編輯插入之內容/f:0\",\n\t\t\t");
+
+			//-----存入detail要寫入後端之資料
+			total_detail = "" ;
+
+			for (int j = choose; j <= tmp_step_num; j++) 
+			{
+				tmp_arr_detail [j + 1] = detailStringArray [j];
+			}
+
+			for(int x = 1; x < choose ; x++) //存入選中之前的step detail
+			{
+				total_detail += detailStringArray [x] + ",";
+			}
+			detailStringArray [choose] = "{\"name\":\"step" + choose.ToString () + "\",\n\"detail_num\":0\n}";
+			total_detail += detailStringArray [choose] + ",";
+
 			tmp_step_num++;
 			new_step_num = tmp_step_num;
+
+			//-----存入choose以後之step
 			for (int j = (choose + 1); j <= tmp_step_num; j++) 
 			{
-				stepStringArray [j] = tmp_arr[j];
+				stepStringArray [j] = tmp_arr [j];
 				step += ("\"step" + j + "\":\"" + stepStringArray [j] + "\"");
-				if(j != tmp_step_num)
+				if (j != tmp_step_num)
 					step += ",\n\t\t\t";
 			}
+
+			//----存入choose以後之step detail
+			for(int j = (choose + 1); j <= tmp_step_num; j++)
+			{
+				detailStringArray [j] = tmp_arr_detail [j];
+				total_detail += detailStringArray [j];
+				if (j != tmp_step_num)
+					total_detail += ",\n";
+			}
+
 			new_step = step;
 			stringToEdit = "請輸入步驟" + (tmp_step_num + 1).ToString () + "之內容";
 		}

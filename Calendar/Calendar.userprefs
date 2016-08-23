@@ -1,19 +1,21 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\ShowSteps.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\AddEvent.cs">
     <Files>
-      <File FileName="Assets\script\AddEvent.cs" Line="453" Column="63" />
-      <File FileName="..\..\..\AppData\LocalLow\DefaultCompany\calendar\day1.json" Line="1" Column="1" />
+      <File FileName="Assets\script\ShowSteps.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\ShowDetail.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\AddDetail.cs" Line="238" Column="28" />
+      <File FileName="Assets\script\AddEvent.cs" Line="548" Column="27" />
+      <File FileName="..\..\..\AppData\LocalLow\DefaultCompany\calendar\day1.json" Line="18" Column="11" />
+      <File FileName="..\..\..\AppData\LocalLow\DefaultCompany\calendar\day2.json" Line="12" Column="10" />
+      <File FileName="Assets\script\EditStep.cs" Line="1" Column="1" />
       <File FileName="Assets\script\home.cs" Line="1" Column="1" />
-      <File FileName="Assets\script\EditStep.cs" Line="17" Column="28" />
-      <File FileName="Assets\script\ShowEvents.cs" Line="17" Column="31" />
-      <File FileName="Assets\script\ShowSteps.cs" Line="164" Column="15" />
+      <File FileName="Assets\script\ShowEvents.cs" Line="1" Column="1" />
       <File FileName="Assets\script\preceding_page.cs" Line="1" Column="1" />
       <File FileName="Assets\script\android_BackHome.cs" Line="1" Column="1" />
       <File FileName="Assets\script\ShowNum.cs" Line="1" Column="1" />
       <File FileName="Assets\script\android_end.cs" Line="1" Column="1" />
       <File FileName="Assets\script\BackNewEvent1.cs" Line="1" Column="1" />
-      <File FileName="D:\Unity Projects\unity project\Calendar\Assets\script\AddEvent.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
